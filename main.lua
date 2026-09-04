@@ -211,8 +211,10 @@ function LocalTranslator:addToHighlightDialog()
                     UIManager:show(InfoMessage:new{ text = _("No selected text.") })
                     return
                 end
-                -- Close the highlight dialog before launching the app
-                this:onClose(true)
+                -- Close dialog and clear highlight before launching the app
+                -- (matches KOReader's "Share text" behavior; onClose() with no
+                -- arg clears selection, onClose(true) would keep it)
+                this:onClose()
                 self:translate(text)
             end,
         }
@@ -368,7 +370,7 @@ function LocalTranslator:addToMainMenu(menu_items)
                 text = _("About"),
                 callback = function()
                     UIManager:show(InfoMessage:new{
-                        text = _([[Local Translator v1.1.0
+                        text = _([[Local Translator v1.1.1
 
 Sends selected text to another Android app via Intent.
 Default: Translator (DavidVentura) - dev.davidv.translator
